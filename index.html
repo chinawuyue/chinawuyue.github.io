@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品经理作品集 - [你的名字]</title>
+    
+    <!-- 引入 Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 FontAwesome -->    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- 引入 Fancybox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+
+    <style>
+        :root {
+            /* Apple 官方使用的标准背景灰 */
+            --bg-gray: #F5F5F7;
+            --bg-white: #FFFFFF;
+            
+            /* 字体颜色：不是纯黑，而是深灰，看着不累眼 */
+            --text-main: #1D1D1F;
+            --text-sub: #86868B;
+            
+            /* 强调色：Apple Blue */
+            --accent-blue: #0066CC;
+            
+            /* 圆角与间距 */
+            --radius-card: 20px;
+            --radius-btn: 980px;
+            --content-max-width: 1080px; 
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased; /* 字体抗锯齿 */
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: var(--text-main); transition: all 0.3s ease; }
+        a:hover { color: var(--accent-blue); }
+
+        /* 容器对齐 */
+        .main-container {
+            max-width: var(--content-max-width);
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        /* --- 1. 导航栏：更通透的磨砂感 --- */
+        .navbar {
+            background-color: rgba(245, 245, 247, 0.7); /* 稍微降低不透明度 */
+            backdrop-filter: blur(20px) saturate(180%); /* 增加饱和度，磨砂感更高级 */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.04); /* 极淡的分割线 */
+        }
+        .navbar-brand { font-weight: 600; font-size: 1.05rem; color: var(--text-main); }
+        .nav-link { font-size: 0.85rem; color: var(--text-main) !important; margin-left: 25px; opacity: 0.8; font-weight: 400; }
+        .nav-link:hover { opacity: 1; color: var(--accent-blue) !important; }
+
+        /* --- 2. Hero Section (灰色背景) --- */
+        .hero-section {
+            background-color: var(--bg-gray); /* 灰色背景 */
+            padding-top: 140px;
+            padding-bottom: 0;
+            overflow: hidden;
+        }
+        .hero-name {
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 15px;
+            color: #000;
+        }
+        .hero-title {
+            font-size: 1.8rem;
+            color: var(--text-sub);
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+        .hero-img {
+            width: 100%;
+            max-width: 460px;
+            display: block;
+            margin: 0 auto;
+            /* 底部渐变遮罩 */
+            mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+        }
+
+        /* --- 3. Bio Section (白色背景) --- */
+        .bio-section {
+            background-color: var(--bg-white); /* 白色背景，形成区分 */
+            padding: 100px 0;
+        }
+        .bio-text {
+            font-size: 1.25rem; /* 字体加大，类似 Apple 官网的产品介绍文案 */
+            line-height: 1.6;
+            color: #1D1D1F;
+            font-weight: 500; /* 稍微加粗一点点 */
+        }
+
+        /* --- 4. Works Section (灰色背景) --- */
+        #works {
+            background-color: var(--bg-gray); /* 再次回到灰色，形成节奏 */
+            padding: 100px 0;
+        }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-align: center;
+            margin-bottom: 70px;
+            color: #000;
+        }
+        
+        .apple-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-card);
+            border: 1px solid rgba(0,0,0,0.02); /* 极细的边框代替重阴影 */
+            overflow: hidden;
+            /* 阴影变得非常淡且扩散很大 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .apple-card:hover {
+            transform: scale(1.015); /* 微弱放大 */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .card-img-wrapper {
+            height: 260px;
+            overflow: hidden;
+            background-color: #ececec;
+        }
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .apple-card:hover .card-img-wrapper img {
+            transform: scale(1.04);
+        }
+        .card-body { 
+            padding: 36px; 
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title { font-weight: 600; font-size: 1.4rem; margin-bottom: 10px; letter-spacing: -0.01em; }
+        .card-desc { font-size: 1rem; color: var(--text-sub); margin-bottom: 24px; flex-grow: 1; line-height: 1.6; }
+        .card-link { font-size: 0.95rem; font-weight: 500; color: var(--accent-blue); margin-top: auto; }
+        .card-link i { transition: transform 0.3s; }
+        .apple-card:hover .card-link i { transform: translateX(4px); }
+
+        /* --- 5. Experience (白色背景) --- */
+        #experience {
+            background-color: var(--bg-white); /* 改为白色背景，更通透 */
+            padding: 100px 0;
+        }
+        
+        /* 去掉原来的 exp-container 盒子样式，改为开放式列表 */
+        .exp-item {
+            padding: 50px 0;
+            border-bottom: 1px solid #E5E5E5; /* 经典的 Apple 分割线颜色 */
+        }
+        .exp-item:first-child { padding-top: 0; }
+        .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        .exp-role { font-size: 1.5rem; font-weight: 600; color: #000; margin-bottom: 5px; letter-spacing: -0.01em; }
+        .exp-company { font-size: 1.1rem; color: var(--text-main); margin-bottom: 15px; display: block; }
+        
+        .exp-date { 
+            font-size: 0.9rem; 
+            color: var(--text-sub); 
+            font-weight: 500;
+            font-feature-settings: "tnum"; /* 等宽数字 */
+        }
+        
+        .exp-list { padding-left: 0; list-style: none; margin-top: 20px; }
+        .exp-list li { 
+            margin-bottom: 12px; 
+            color: #333; 
+            font-size: 1.05rem; 
+            position: relative;
+            padding-left: 18px;
+        }
+        /* 自定义列表圆点 */
+        .exp-list li::before {
+            content: "•";
+            color: var(--text-sub);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .exp-result { 
+            margin-top: 20px; 
+            font-weight: 500; 
+            color: #000; 
+            font-size: 1.05rem; 
+            background: var(--bg-gray);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 12px; /* 成果用灰色气泡包裹 */
+        }
+
+        /* --- 按钮 --- */
+        .btn-apple {
+            background-color: #1D1D1F;
+            color: white;
+            border-radius: var(--radius-btn);
+            padding: 12px 36px;
+            font-size: 1rem;
+            border: 1px solid #1D1D1F;
+            transition: all 0.3s ease;
+        }
+        .btn-apple:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-outline-apple {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid #D2D2D7;
+            border-radius: var(--radius-btn);
+            padding: 12px 36px;
+            font-size: 1rem;
+        }
+        .btn-outline-apple:hover {
+            border-color: #000;
+            color: #000;
+        }
+
+        /* 页脚 */
+        footer { background: var(--bg-gray); color: var(--text-sub); padding: 60px 0; border-top: 1px solid #E5E5E5; }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero-name { font-size: 3.2rem; text-align: center; }
+            .hero-title { text-align: center; margin-bottom: 30px; }
+            .hero-text-container { text-align: center; padding-bottom: 40px !important; }
+            .bio-text { font-size: 1.1rem; }
+            .d-md-flex { display: block !important; }
+            .exp-date { display: block; margin-top: 5px; margin-bottom: 10px; color: var(--text-sub); }
+            .exp-role { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container main-container">
+            <a class="navbar-brand" href="#">YOUR NAME</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Overview</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#works">Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section [灰色背景] -->
+    <header id="home" class="hero-section">
+        <div class="container main-container">
+            <div class="row align-items-end">
+                <!-- 左侧文字 -->
+                <div class="col-lg-6 pb-5 mb-lg-5 hero-text-container">
+                    <h1 class="hero-name">张 三</h1>
+                    <div class="hero-title">AI Product Manager</div>
+                    <div class="d-flex gap-3 justify-content-md-start justify-content-center">
+                        <a href="mailto:your.email@example.com" class="btn btn-apple">Contact Me</a>
+                        <a href="#" class="btn btn-outline-apple">Resume</a>
+                    </div>
+                </div>
+                <!-- 右侧人物照片 -->
+                <div class="col-lg-6 text-center">
+                    <img src="images/wy_nobackground.png" 
+                    alt="Profile" class="hero-img" style="max-width: 320px; width: 70%; height: auto;">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Bio Section [白色背景] -->
+    <section class="bio-section">
+        <div class="container main-container">
+            <div class="row justify-content-center g-5">
+                <div class="col-md-6">
+                    <p class="bio-text">
+                        我目前是一名专注于大模型应用落地的 AI 产品经理。在转型互联网之前，我拥有 5 年的建筑设计背景。这种独特的跨界经历，让我兼具工程师的逻辑思维与设计师的感性洞察。
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="bio-text" style="color: var(--text-sub);">
+                        我热衷于探索 LLM 在生产力工具中的实际应用。在过去的实习中，我主导过从 Prompt 优化到 RAG 知识库搭建的完整流程。我相信技术的终极形态是“无感”的，优秀的产品应像建筑空间一样，自然地包容并服务于人。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. AI Coding Works [灰色背景] -->
+    <section id="works">
+        <div class="container main-container">
+            <h2 class="section-title">Selected Works</h2>
+            
+            <div class="row g-4">
+                <!-- 作品 1 -->
+                <div class="col-md-6">
+                    <a href="https://via.placeholder.com/1200x800?text=Project+1+Detail" 
+                       data-fancybox="gallery" 
+                       data-caption="<strong>智能文档助手</strong><br>基于RAG技术的PDF问答工具。">
+                        <div class="apple-card">
+                            <div class="card-img-wrapper">
+                                <img src="https://via.placeholder.com/600x400?text=RAG+Assistant" alt="Work 1">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">智能文档助手</h3>
+                                <p class="card-desc">基于 RAG 技术，极速读取 PDF 并回答问题。解决了传统检索效率低下的痛点，支持多文档并发处理。</p>
+                                <span class="card-link">View Details <i class="fas fa-chevron-right ms-1" style="font-size: 0.8em;"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 作品 2 -->
+                <div class="col-md-6">
+                    <a href="https://via.placeholder.com/1200x800?text=Project+2+Detail" 
+                       data-fancybox="gallery" 
+                       data-caption="<strong>AI绘图生成器</strong><br>接入Stable Diffusion API。">
+                        <div class="apple-card">
+                            <div class="card-img-wrapper">
+                                <img src="https://via.placeholder.com/600x400?text=AI+Image+Generator" alt="Work 2">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">AI 绘图生成器</h3>
+                                <p class="card-desc">接入 Stable Diffusion API，专为建筑师定制的灵感生成工具。支持 Prompt 自动优化与风格迁移。</p>
+                                <span class="card-link">View Details <i class="fas fa-chevron-right ms-1" style="font-size: 0.8em;"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 作品 3 -->
+                <div class="col-md-6">
+                    <a href="https://via.placeholder.com/1200x800?text=Project+3+Detail" 
+                       data-fancybox="gallery" 
+                       data-caption="<strong>个人日程 Agent</strong><br>理解自然语言并自动安排Google Calendar。">
+                        <div class="apple-card">
+                            <div class="card-img-wrapper">
+                                <img src="https://via.placeholder.com/600x400?text=AI+Agent" alt="Work 3">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">个人日程 Agent</h3>
+                                <p class="card-desc">利用 LLM 的意图识别能力，将自然语言指令转化为 Google Calendar 的 API 调用，实现真正的智能助理。</p>
+                                <span class="card-link">View Details <i class="fas fa-chevron-right ms-1" style="font-size: 0.8em;"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 作品 4 -->
+                <div class="col-md-6">
+                    <a href="https://via.placeholder.com/1200x800?text=Project+4+Detail" 
+                       data-fancybox="gallery" 
+                       data-caption="<strong>数据可视化大屏</strong><br>AI辅助编写的前端代码。">
+                        <div class="apple-card">
+                            <div class="card-img-wrapper">
+                                <img src="https://via.placeholder.com/600x400?text=Data+Dashboard" alt="Work 4">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">数据可视化大屏</h3>
+                                <p class="card-desc">AI 辅助编写 Vue.js 代码，实时展示产品埋点数据。将枯燥的数据转化为直观的业务洞察。</p>
+                                <span class="card-link">View Details <i class="fas fa-chevron-right ms-1" style="font-size: 0.8em;"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Experience [白色背景 - 更像一份精美的简历] -->
+    <section id="experience">
+        <div class="container main-container">
+            <h2 class="section-title">Experience</h2>
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    
+                    <!-- 经历 1 -->
+                    <div class="exp-item">
+                        <div class="d-md-flex justify-content-between align-items-baseline">
+                            <div>
+                                <div class="exp-role">AI 产品经理实习生</div>
+                                <span class="exp-company">某知名互联网大厂 A</span>
+                            </div>
+                            <div class="exp-date">2023.06 - 至今</div>
+                        </div>
+                        <ul class="exp-list">
+                            <li>负责公司内部大模型工具的 Prompt 优化，通过少样本提示（Few-Shot）提升代码生成准确率 15%。</li>
+                            <li>撰写 PRD 文档，协调开发与设计团队，推动“智能客服”功能上线，降低人工客服压力。</li>
+                            <li>建立数据监控指标体系，分析用户行为漏斗，发现断点并提出 UX 改进方案。</li>
+                        </ul>
+                        <div class="exp-result">✨ 成果：功能上线首周 DAU 突破 5000，用户满意度 (CSAT) 提升 20%。</div>
+                    </div>
+
+                    <!-- 经历 2 -->
+                    <div class="exp-item">
+                        <div class="d-md-flex justify-content-between align-items-baseline">
+                            <div>
+                                <div class="exp-role">产品运营实习生</div>
+                                <span class="exp-company">AI 初创独角兽 B</span>
+                            </div>
+                            <div class="exp-date">2023.01 - 2023.05</div>
+                        </div>
+                        <ul class="exp-list">
+                            <li>策划并执行“AI绘画挑战赛”，负责活动规则制定与社群宣发，吸引 2000+ 用户参与。</li>
+                            <li>负责 B 端客户需求收集，协助 PM 进行竞品调研，输出了 2 份深度行业分析报告。</li>
+                        </ul>
+                        <div class="exp-result">✨ 成果：核心社群活跃度提升 40%，协助销售团队转化 3 个企业级客户。</div>
+                    </div>
+
+                    <!-- 经历 3 -->
+                    <div class="exp-item">
+                        <div class="d-md-flex justify-content-between align-items-baseline">
+                            <div>
+                                <div class="exp-role">建筑设计师助理</div>
+                                <span class="exp-company">某建筑设计院 C</span>
+                            </div>
+                            <div class="exp-date">2022.07 - 2022.12</div>
+                        </div>
+                        <ul class="exp-list">
+                            <li>参与某市级图书馆项目的方案深化设计，负责 Rhino 复杂曲面建模与效果图渲染。</li>
+                            <li>利用 Python 脚本批量处理 CAD 图纸，解决了图层混乱问题，将团队绘图效率提升 30%。</li>
+                        </ul>
+                        <div class="exp-result">✨ 成果：方案成功中标，自研脚本工具被全组设计师采纳使用。</div>
+                    </div>
+
+                    <!-- 经历 4 -->
+                    <div class="exp-item">
+                        <div class="d-md-flex justify-content-between align-items-baseline">
+                            <div>
+                                <div class="exp-role">数据分析实习生</div>
+                                <span class="exp-company">科技公司 D</span>
+                            </div>
+                            <div class="exp-date">2021.06 - 2021.09</div>
+                        </div>
+                        <ul class="exp-list">
+                            <li>使用 SQL 提取业务数据，搭建 Tableau 可视化仪表盘，为周会提供数据支持。</li>
+                            <li>协助进行用户调研，整理 500+ 条用户反馈并归类。</li>
+                        </ul>
+                        <div class="exp-result">✨ 成果：实现了第一份自动化数据日报，节省每日人工统计时间 1 小时。</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="text-center">
+        <div class="container main-container">
+            <p class="mb-1 fw-bold" style="color: #1d1d1f;">Your Name</p>
+            <p class="text-muted small mb-0">Designed with Apple Aesthetic. © 2025 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        Fancybox.bind("[data-fancybox]", {
+            Thumbs: false,
+            Toolbar: {
+                display: { left: [], middle: [], right: ["close"] },
+            },
+        });
+    </script>
+</body>
+</html>
